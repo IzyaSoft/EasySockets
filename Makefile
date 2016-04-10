@@ -1,16 +1,16 @@
 # Easy Sockets Makefile Shared Library v 1.0
 # ********************************1. VARIABLES SECTION*********************************
 # 1 C/C++ Compiler
-CXX = GCC
+CXX = g++
 # 2. Compiler Keys (man gcc)
 CXXFLAGS = -Wall -g
-C99_LANG = -std=C99
-CPP_03_LANG = -std=C++03
-SHARED = -shared
+C99_LANG = -std=c99
+CPP_03_LANG = -std=c++03
+SHARED = -shared -fPIC
 # todo: Add other cpp and c standards
 # 3. Linking libraries
 LIBPATH = -L. -L..
-LIBS = 
+LIBS = -lrt
 # -lrt -lpthread
 # 4. DEFINITIONS (PREPROCESSOR DEFINE)
 #DEFS=
@@ -25,12 +25,13 @@ SRCFILESDIRS := $(addprefix / , $(DIRS))
 CSRCFILES := $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.c))
 CPPSRCFILES = $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.cpp))
 # 7. OBJECTS FILE NAME
-OBJFILES = $(CSRCFILES:.c=.o) $(CPPSRCFILES:.cpp=.o)
+C_OBJFILES = $(CSRCFILES:.c=.o)
+CPP_OBJFILES = $(CPPSRCFILES:.cpp=.o) $(C_OBJFILES)
 # $(SRCFILES:.cpp=.o)
 # 8. TARGETS OR RESULTING OBJ-FILE
 EXEC_TARGET = EasySockets
-C_SHARED_LIB = libEasySockets.so
-CPP_SHARED_LIB = libEasySockets.so
+C_SHARED_LIB = libEasySocketsC_1.0.so
+CPP_SHARED_LIB = libEasySocketsCpp_1.0.so
 DEFAULT_TARGET = $(CPP_SHARED_LIB)
 # *****************************END OF VARIABLES SECTION********************************
 # ****************************2. BUILDING TARGETS SECTION******************************
@@ -53,11 +54,11 @@ c99-shared: clean $(C_SHARED_LIB) finish
 
 cpp03-shared: clean $(CPP_SHARED_LIB) finish
 
-$(C_SHARED_LIB):$(OBJFILES)
-	$(CXX) $(CXXFLAGS) $(C99_LANG) $(SHARED) $(INCLUDES) -o $(EXEC_TARGET) $(OBJFILES) $(LIBPATH) $(LIBS)
+$(C_SHARED_LIB):$(C_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(C99_LANG) $(SHARED) $(INCLUDES) -o $(C_SHARED_LIB) $(C_OBJFILES) $(LIBPATH) $(LIBS)
 	
-$(CPP_SHARED_LIB):$(OBJFILES)
-	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(SHARED) $(INCLUDES) -o $(EXEC_TARGET) $(OBJFILES) $(LIBPATH) $(LIBS)
+$(CPP_SHARED_LIB):$(CPP_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(SHARED) $(INCLUDES) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES) $(LIBPATH) $(LIBS)
 
 # These are the suffix replacement rules
 %.o : %.c
@@ -67,11 +68,11 @@ $(CPP_SHARED_LIB):$(OBJFILES)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@ -rm *.o
+	@ -rm -f *.o
 
 #remove intermediate obj files
 finish:
-	@ -rm $(OBJFILES)
+	@ -rm $(CPP_OBJFILES)
 
 depend: $(SRCFILES)
 	makedepend $(INCLUDES) $^

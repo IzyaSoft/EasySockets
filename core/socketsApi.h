@@ -1,35 +1,43 @@
-#ifnded SOCKETS_API
+#ifndef SOCKETS_API
 #define SOCKETS_API
-/* Conditional heders include */
+
+#include <stdlib.h>
+#include <stdbool.h>
+/* Conditional headers include */
 #ifdef __linux__
-    #include <netinet/ip.h>
+    #include <sys/types.h>
+    #include <sys/socket.h>
 #elif _WIN32
     #include<winsock2.h>
 #else
 /* to do: unix? */
 #endif
-/* Overriding Types */
+
+/* Common Types */
 struct SocketInfo
 {
-    sockaddr_in _socketAddress;
+    struct sockaddr_in* _networkAddress;
+    struct sockaddr_un* _unixAddress;
     int _socket;
 };
 
-//struct ConnectionFilter;
+// struct ConnectionFilter;
 
-SocketInfo createUnixSocket(const char* socketAddress, unsigned short port = -1);
-SocketInfo createUdpSocket(const char* socketAddress, unsigned short port = -1);
-SocketInfo createTcpSocket(const char* socketAddress, unsigned short port = -1);
-SocketInfo createRawSocket(const char* socketAddress, unsigned short port = -1);
+struct SocketInfo* createUnixSocket(const char* address, bool blocking = false);
+struct SocketInfo* createUdpSocket(const char* address, unsigned short port, bool blocking = false);
+struct SocketInfo* createTcpSocket(const char* address, unsigned short port, bool blocking = false);
+struct SocketInfo* createRawSocket(const char* address, unsigned short port, bool blocking = false);
+struct SocketInfo* createSocketImpl(bool network);
+void freeSocket(struct SocketInfo* socket);
 
 /* Both client and server functions*/
-bool bindSockect(const SocketInfo* socketInfo);
+bool bindSockect(const struct  SocketInfo* socketInfo);
 int send(const char* data);
 int recieve(char* buffer, int bufferSize);
 /* Client functions */
-bool connect (const SocketInfo* socket, const char* remoteIp, unsigned short port);
+bool connect (const struct SocketInfo* socket, const char* remoteIp, unsigned short port);
 /* Server functions */
-void processListen(const SocketInfo* server, ConnectionFilter;* *clientsFilters, bool (*plistebInterrupt)() = null);
-bool accept(ConnectionFilter;* *clientsFilters);
+// void processListen(const SocketInfo* server, ConnectionFilter* *clientsFilters, bool (*plistebInterrupt)() = null);
+// bool accept(ConnectionFilter;* *clientsFilters);
 
 #endif
