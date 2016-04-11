@@ -31,9 +31,9 @@ struct SocketInfo* createSocketImpl(bool network);
 void freeSocket(struct SocketInfo* socket);
 
 /* Both client and server functions*/
-bool bindSockect(const struct  SocketInfo* socketInfo);
+bool bindSocket(const struct  SocketInfo* socketInfo);
 int send(const char* data);
-int recieve(char* buffer, int bufferSize);
+int receive(char* buffer, int bufferSize);
 /* Client functions */
 bool connect (const struct SocketInfo* socket, const char* remoteIp, unsigned short port);
 /* Server functions */
