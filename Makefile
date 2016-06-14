@@ -2,12 +2,15 @@
 # ********************************1. VARIABLES SECTION*********************************
 # 1 C/C++ Compiler
 CXX = g++
-# 2. Compiler Keys (man gcc)
-CXXFLAGS = -Wall -g -fPIC
+# 2. Compiler And Linker Keys (man gcc)
+CXXFLAGS = -Wall -g -O2
 C99_LANG = -std=c99
 CPP_03_LANG = -std=c++03
-SHARED = -shared
 # todo: Add other cpp and c standards
+SHARED_LIB_LINK = -shared
+SHARED_LIB_FLAG = -fPIC
+STATIC_LIB_LINK = -static
+STATIC_LIB_ARCH = ar rcs
 # 3. Linking libraries
 LIBPATH = -L. -L..
 # -L/lib64/
@@ -25,11 +28,11 @@ DIRS = core
 
 SRCFILESDIRS := $(addprefix / , $(DIRS))
 # Obtaining source files list
-CSRCFILES := $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.c))
-CPPSRCFILES = $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.cpp))
+C_SRC_FILES := $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.c))
+CPP_SRC_FILES = $(foreach sdir, $(SRCFILESDIRS), $(wildcard $(sdir)/*.cpp))
 # 7. OBJECTS FILE NAME
-C_OBJFILES = $(CSRCFILES:.c=.o)
-CPP_OBJFILES = $(CPPSRCFILES:.cpp=.o) $(C_OBJFILES)
+C_OBJFILES = $(C_SRC_FILES:.c=.o)
+CPP_OBJFILES = $(CPP_SRC_FILES:.cpp=.o) $(C_OBJFILES)
 # $(SRCFILES:.cpp=.o)
 # 8. TARGETS OR RESULTING OBJ-FILE
 LIB_VERSION := 1.0
@@ -58,16 +61,16 @@ c99-shared: clean $(C_SHARED_LIB) finish
 cpp03-shared: clean $(CPP_SHARED_LIB) finish
 
 $(C_SHARED_LIB):$(C_OBJFILES)
-	$(CXX) $(CXXFLAGS) $(C99_LANG) $(SHARED) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(C99_LANG) $(SHARED_LIB_LINK) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
 # $(LIBPATH) $(LIBS)
 	
 $(CPP_SHARED_LIB):$(CPP_OBJFILES)
-	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(SHARED) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(SHARED_LIB_LINK) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES)
 # $(LIBPATH) $(LIBS)
 
 # These are the suffix replacement rules
 %.o : %.c
-	$(CXX) $(CXXFLAGS) $(C99_LANG) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SHARED_LIB_FLAG) $(C99_LANG) $(INCLUDES) -c $< -o $@
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(INCLUDES) -c $< -o $@
@@ -79,7 +82,7 @@ clean:
 finish:
 	@ -rm $(CPP_OBJFILES)
 
-depend: $(CSRCFILES)
+depend: $(C_SRC_FILES)
 	makedepend $(INCLUDES) $^
 
 # make depend needs this line

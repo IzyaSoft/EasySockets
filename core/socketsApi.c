@@ -1,7 +1,7 @@
 #include "socketsApi.h"
 
 
-struct SocketInfo* createUnixSocket(const char* address, bool blocking = false)
+struct SocketInfo* createUnixSocket(const char* address, bool blocking)
 {
 	struct SocketInfo* socketInfo = createSocketImpl(false);
     return socketInfo;
