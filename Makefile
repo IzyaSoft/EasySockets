@@ -14,6 +14,7 @@ STATIC_LIB_ARCH = ar rcs
 # 3. Linking libraries
 LIBPATH = -L. -L..
 # -L/lib64/
+# -L/lib/
 LIBS = 
 # -lc -lrt
 # -lrt -lpthread
@@ -73,10 +74,12 @@ $(CPP_SHARED_LIB):$(CPP_OBJFILES)
 	$(CXX) $(CXXFLAGS) $(SHARED_LIB_FLAG) $(C99_LANG) $(INCLUDES) -c $< -o $@
 
 %.o : %.cpp
-	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SHARED_LIB_FLAG) $(CPP_03_LANG) $(INCLUDES) -c $< -o $@
 
 clean:
 	@ -rm -f *.o
+	@ -rm -rf $C_SHARED_LIB
+	@ -rm -rf $CPP_SHARED_LIB
 
 #remove intermediate obj files
 finish:
