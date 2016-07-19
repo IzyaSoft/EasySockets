@@ -22,7 +22,7 @@ LIBS =
 # -lc -lrt
 # -lrt -lpthread
 # 4. DEFINITIONS (PREPROCESSOR DEFINE)
-DEFS=
+DEFS =
 # 5. INCLUDES PATH
 INCLUDES = -I../core/
 # 6. SOURCES FILES
@@ -37,7 +37,7 @@ C_OBJFILES = $(C_SRC_FILES:.c=.o)
 CPP_OBJFILES = $(CPP_SRC_FILES:.cpp=.o) $(C_OBJFILES)
 # $(SRCFILES:.cpp=.o)
 # 8. TARGETS OR RESULTING OBJ-FILE
-LIB_VERSION := 1.0
+# LIB_VERSION := 1.0
 C_SHARED_LIB = libEasySocketsC.so.$(LIB_VERSION_OPTION)
 CPP_SHARED_LIB = libEasySocketsCpp.so.$(LIB_VERSION_OPTION)
 DEFAULT_TARGET = c99-shared
@@ -58,24 +58,25 @@ DEFAULT_TARGET = c99-shared
 
 all: clean $(DEFAULT_TARGET) finish
 
-c99-shared: clean $(C_SHARED_LIB) finish
+c99-shared: clean  $(C_SHARED_LIB) finish
 
 cpp03-shared: clean $(CPP_SHARED_LIB) finish
 
+
 $(C_SHARED_LIB):$(C_OBJFILES)
-	$(CXX) $(CXXFLAGS) $(C99_LANG) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
 # $(LIBPATH) $(LIBS)
 	
 $(CPP_SHARED_LIB):$(CPP_OBJFILES)
-	$(CXX) $(CXXFLAGS) $(CPP_03_LANG) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES)
+	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES)
 # $(LIBPATH) $(LIBS)
 
 # These are the suffix replacement rules
 %.o : %.c
-	$(CXX) $(CXXFLAGS) $(LIB_COMPILE_OPTION) $(C99_LANG) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_COMPILE_OPTION) $(INCLUDES) -c $< -o $@
 
 %.o : %.cpp
-	$(CXX) $(CXXFLAGS) $(LIB_COMPILE_OPTION) $(CPP_03_LANG) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_COMPILE_OPTION) $(INCLUDES) -c $< -o $@
 
 clean:
 	@ -rm -f $(CPP_OBJFILES)
