@@ -33,6 +33,8 @@ CPP_OBJFILES = $(CPP_SRC_FILES:.cpp=.o) $(C_OBJFILES)
 # LIB_VERSION := 1.0
 C_SHARED_LIB = libEasySocketsC.so.$(LIB_VERSION_OPTION)
 CPP_SHARED_LIB = libEasySocketsCpp.so.$(LIB_VERSION_OPTION)
+C_STATIC_LIB = libEasySocketsC.a.$(LIB_VERSION_OPTION)
+CPP_STATIC_LIB = libEasySocketsCpp.a.$(LIB_VERSION_OPTION)
 DEFAULT_TARGET = c99-shared
 # *****************************END OF VARIABLES SECTION********************************
 # ****************************2. BUILDING TARGETS SECTION******************************
@@ -55,18 +57,24 @@ c99-shared: clean $(C_SHARED_LIB) finish
 
 cpp03-shared: clean $(CPP_SHARED_LIB) finish
 
-c99-static: clean $(C_SHARED_LIB) finish
+c99-static: clean $(C_STATIC_LIB) finish
 
-cpp03-static: clean $(CPP_SHARED_LIB) finish
+cpp03-static: clean $(CPP_STATIC_LIB) finish
 
 
 $(C_SHARED_LIB):$(C_OBJFILES)
 	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
 # $(LIBPATH) $(LIBS)
 	
-$(CPP_SHARED_LIB):$(CPP_OBJFILES)
+$(CPP_SHARED_LIB):$(C_OBJFILES) $(CPP_OBJFILES)
 	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(CPP_SHARED_LIB) $(CPP_OBJFILES)
 # $(LIBPATH) $(LIBS)
+
+$(C_STATIC_LIB):$(C_OBJFILES)
+	$(STATIC_LIB_ARCH) $(C_STATIC_LIB) $(C_OBJFILES)
+	
+$(CPP_STATIC_LIB):$(C_OBJFILES) $(CPP_OBJFILES)
+	$(STATIC_LIB_ARCH) $(CPP_STATIC_LIB) $(CPP_OBJFILES)
 
 # These are the suffix replacement rules
 %.o : %.c
