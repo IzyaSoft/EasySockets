@@ -1,6 +1,6 @@
 # Easy Sockets Makefile Implementation v 1.0
 # ********************************0. INCLUDE SECTION***********************************
-# include Makefile.defs
+include Makefile.extra
 # *****************************END OF INCLUDE SECTION**********************************
 # ********************************1. VARIABLES SECTION*********************************
 # 1 C/C++ Compiler

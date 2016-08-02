@@ -7,13 +7,3 @@ STATIC_LIB_LINK = -static
 SHARED_LIB_COMPILE = -fPIC
 STATIC_LIB_COMPILE =
 # ************************END OF VARIABLES DEFINITION SECTION***************************
-# ******************************** BUILD OPTIONS****************************************
-# 0. COMMON OPTIONS
-LIB_VERSION_OPTION := 1.0
-EXTRA_INCLUDE = 
-EXTRA_SRC_DIRS = 
-EXTRA_C_SRC_FILES =
-EXTRA_CPP_SRC_FILES =
-EXTRA_LIBPATH =
-EXTRA_LIBS =
-# ************************ END OF BUILD OPTIONS SECTION*********************************

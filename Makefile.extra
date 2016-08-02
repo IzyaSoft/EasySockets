@@ -1,0 +1,8 @@
+# ***************************** EXTRA BUILD OPTIONS*************************************
+EXTRA_INCLUDE = 
+EXTRA_SRC_DIRS = 
+EXTRA_C_SRC_FILES =
+EXTRA_CPP_SRC_FILES =
+EXTRA_LIBPATH =
+EXTRA_LIBS =
+# ************************ END OF BUILD OPTIONS SECTION*********************************
