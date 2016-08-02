@@ -1,8 +1,11 @@
 # ******************************** VARIABLES DEFINITION*********************************
+export
 C99_LANG = -std=c99
 CPP_03_LANG = -std=c++03
 SHARED_LIB_LINK = -shared
 STATIC_LIB_LINK = -static
+SHARED_LIB_COMPILE = -fPIC
+STATIC_LIB_COMPILE =
 # ************************END OF VARIABLES DEFINITION SECTION***************************
 # ******************************** BUILD OPTIONS****************************************
 # 0. COMMON OPTIONS
@@ -13,14 +16,4 @@ EXTRA_C_SRC_FILES =
 EXTRA_CPP_SRC_FILES =
 EXTRA_LIBPATH =
 EXTRA_LIBS =
-# C99 LANGUAGE_OPTIONS
-LANG_OPTION = $(C99_LANG)
-# C99 LANGUAGE_OPTIONS
-# CPP03_LANG_OPTION = $(CPP_03_LANG)
-# OPTIONS FOR SHARED LIB
-LIB_LINK_OPTION := $(SHARED_LIB_LINK)
-LIB_COMPILE_OPTION = -fPIC
-# 2. OPTIONS FOR STATIC LIB
-# LIB_LINK_OPTION := $(STATIC_LIB_LINK)
-# LIB_LINK_OPTION = 
 # ************************ END OF BUILD OPTIONS SECTION*********************************
