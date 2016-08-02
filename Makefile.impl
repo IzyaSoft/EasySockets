@@ -87,6 +87,8 @@ clean:
 	@ -rm -f $(CPP_OBJFILES)
 	@ -rm -rf $(C_SHARED_LIB)
 	@ -rm -rf $(CPP_SHARED_LIB)
+	@ -rm -rf $(C_STATIC_LIB)
+	@ -rm -rf $(CPP_STATIC_LIB)
 
 #remove intermediate obj files
 finish:
