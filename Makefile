@@ -21,6 +21,6 @@ cpp03-static:
 	@ -make -f Makefile.impl cpp03-static LANG_OPTION=${CPP_03_LANG} LIB_LINK_OPTION=${STATIC_LIB_LINK} LIB_COMPILE_OPTION=${STATIC_LIB_COMPILE} LIB_VERSION_OPTION=${VERSION} LIB_BUILD_DIRECTORY=${BUILD_DIRECTORY}
 
 clean:
-	@ -make -f Makefile.impl clean
+	@ -make -f Makefile.impl clean LIB_VERSION_OPTION=${VERSION}
 
 # ****************************END OF BUILDING TARGETS SECTION**************************
