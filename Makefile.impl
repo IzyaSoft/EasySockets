@@ -31,10 +31,10 @@ CPP_OBJFILES = $(CPP_SRC_FILES:.cpp=.o) $(C_OBJFILES)
 # $(SRCFILES:.cpp=.o)
 # 8. TARGETS OR RESULTING OBJ-FILE
 # LIB_VERSION := 1.0
-C_SHARED_LIB = libEasySocketsC.so.$(LIB_VERSION_OPTION)
-CPP_SHARED_LIB = libEasySocketsCpp.so.$(LIB_VERSION_OPTION)
-C_STATIC_LIB = libEasySocketsC.a.$(LIB_VERSION_OPTION)
-CPP_STATIC_LIB = libEasySocketsCpp.a.$(LIB_VERSION_OPTION)
+C_SHARED_LIB = $(LIB_BUILD_DIRECTORY)/libEasySocketsC.so.$(LIB_VERSION_OPTION)
+CPP_SHARED_LIB = $(LIB_BUILD_DIRECTORY)/libEasySocketsCpp.so.$(LIB_VERSION_OPTION)
+C_STATIC_LIB = $(LIB_BUILD_DIRECTORY)/libEasySocketsC.a.$(LIB_VERSION_OPTION)
+CPP_STATIC_LIB = $(LIB_BUILD_DIRECTORY)/libEasySocketsCpp.a.$(LIB_VERSION_OPTION)
 DEFAULT_TARGET = c99-shared
 # *****************************END OF VARIABLES SECTION********************************
 # ****************************2. BUILDING TARGETS SECTION******************************
@@ -49,18 +49,20 @@ DEFAULT_TARGET = c99-shared
 # $< first dependancy
 
 # PHONY TARGET ARE TARGETS WITHOUT OUTPUT FILES
-.PHONY: depend clean finish
+.PHONY: depend clean finish create-build-dir
 
-all: clean $(DEFAULT_TARGET) finish
+all: clean create-build-dir $(DEFAULT_TARGET) finish
 
-c99-shared: clean $(C_SHARED_LIB) finish
+c99-shared: clean create-build-dir $(C_SHARED_LIB) finish
 
-cpp03-shared: clean $(CPP_SHARED_LIB) finish
+cpp03-shared: clean create-build-dir $(CPP_SHARED_LIB) finish
 
-c99-static: clean $(C_STATIC_LIB) finish
+c99-static: clean create-build-dir $(C_STATIC_LIB) finish
 
-cpp03-static: clean $(CPP_STATIC_LIB) finish
+cpp03-static: clean create-build-dir $(CPP_STATIC_LIB) finish
 
+create-build-dir:
+	@ -mkdir -p $(LIB_BUILD_DIRECTORY)
 
 $(C_SHARED_LIB):$(C_OBJFILES)
 	$(CXX) $(CXXFLAGS) $(LANG_OPTION) $(LIB_LINK_OPTION) $(INCLUDES) $(LIBPATH) $(LIBS) -o $(C_SHARED_LIB) $(C_OBJFILES)
