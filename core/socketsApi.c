@@ -43,3 +43,28 @@ void destroySocket(struct SocketInfo* socket)
         free(socket->_unixAddress);
     free(socket);
 }
+
+bool bindSocket(const struct  SocketInfo* socketInfo)
+{
+    return false;
+}
+
+int send(const char* data)
+{
+    return -1;
+}
+
+int receive(char* buffer, int bufferSize)
+{
+    return -1;
+}
+
+void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistebInterrupt)())
+{
+
+}
+
+bool accept(const struct ConnectionFilter* *clientsFilters)
+{
+    return false;
+}

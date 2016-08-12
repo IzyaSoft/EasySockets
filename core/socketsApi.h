@@ -24,7 +24,10 @@ struct SocketInfo
     int _socket;
 };
 
-// struct ConnectionFilter;
+struct ConnectionFilter
+{
+
+};
 
 struct SocketInfo* createUnixSocket(const char* address, bool blocking = false);
 struct SocketInfo* createUdpSocket(const char* address, unsigned short port, bool blocking = false);
@@ -40,7 +43,7 @@ int receive(char* buffer, int bufferSize);
 /* Client functions */
 bool connect (const struct SocketInfo* socket, const char* remoteIp, unsigned short port);
 /* Server functions */
-// void processListen(const SocketInfo* server, ConnectionFilter* *clientsFilters, bool (*plistebInterrupt)() = null);
-// bool accept(ConnectionFilter;* *clientsFilters);
+void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistenInterrupt)() = NULL);
+bool accept(const struct ConnectionFilter* *clientsFilters);
 
 #endif
