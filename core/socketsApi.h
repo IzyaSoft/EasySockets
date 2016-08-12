@@ -16,23 +16,34 @@
 /* to do: unix? */
 #endif
 
+enum NetworkType
+{
+    IPv4 = 0,
+    IPv6 = 1
+};
+
 /* Common Types */
 struct SocketInfo
 {
     struct sockaddr_in* _networkAddress;
+    struct sockaddr_in6* _network6Address;
     struct sockaddr_un* _unixAddress;
     int _socket;
 };
 
 struct ConnectionFilter
 {
-
+    bool (*pFiltrate)(const struct SocketInfo* server, int client);
 };
 
 struct SocketInfo* createUnixSocket(const char* address, bool blocking = false);
+// todo: umv: type of IP: v4 or v6
 struct SocketInfo* createUdpSocket(const char* address, unsigned short port, bool blocking = false);
+// todo: umv: type of IP: v4 or v6
 struct SocketInfo* createTcpSocket(const char* address, unsigned short port, bool blocking = false);
+// todo: umv: type of IP: v4 or v6
 struct SocketInfo* createRawSocket(const char* address, unsigned short port, bool blocking = false);
+// todo: umv: type of IP: v4 or v6
 struct SocketInfo* createSocketImpl(bool network);
 void freeSocket(struct SocketInfo* socket);
 
