@@ -28,8 +28,8 @@ struct SocketInfo* createRawSocket(const char* address, unsigned short port, boo
 struct SocketInfo* createSocketImpl(bool network)
 {
 	struct SocketInfo* socketInfo = (struct SocketInfo*) malloc(sizeof(struct SocketInfo));
-    // socketInfo->_networkAddress = network ? (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in)) : NULL;
-    // socketInfo->_unixAddress = !network ? (struct sockaddr_un*) malloc(sizeof(struct sockaddr_un)) : NULL;
+    socketInfo->_networkAddress = network ? (struct sockaddr_in*) malloc(sizeof(struct sockaddr_in)) : NULL;
+    socketInfo->_unixAddress = !network ? (struct sockaddr_un*) malloc(sizeof(struct sockaddr_un)) : NULL;
     return socketInfo;
 }
 
