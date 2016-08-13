@@ -1,4 +1,4 @@
-#include "socketsApi.h"
+﻿#include "socketsApi.h"
 
 struct SocketInfo* createSocketImpl(bool network, NetworkType networkType);
 
