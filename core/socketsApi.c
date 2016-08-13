@@ -90,7 +90,7 @@ void closeServer(const struct SocketInfo* socket)
 
 }
 
-void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistebInterrupt)())
+void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistenInterrupt)())
 {
 
 }
