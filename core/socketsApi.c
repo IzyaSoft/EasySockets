@@ -59,7 +59,7 @@ int receive(char* buffer, int bufferSize)
     return -1;
 }
 
-void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistebInterrupt)())
+void processListen(const struct SocketInfo* server, const struct ConnectionFilter* *clientsFilters, bool (*plistenInterrupt)())
 {
 
 }
